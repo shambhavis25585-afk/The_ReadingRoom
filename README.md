@@ -13,3 +13,9 @@ Open Library Search API (https://openlibrary.org/search.json)
 
 ### Technologies
 HTML, CSS, and Vanilla JavaScript.
+
+
+## How to Setup and Run
+1. Clone or download this repository to your local machine.
+2. Open the project folder.
+3. Double-click the `index.html` file to launch the application in your web browser.
