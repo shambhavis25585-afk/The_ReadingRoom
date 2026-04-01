@@ -4,7 +4,7 @@
 A digital sanctuary for book lovers to discover new titles, research authors, and explore literature using real-time data.
 
 ### API Used
-Open Library Search API (https://openlibrary.org/search.json)
+Google Books API (https://www.googleapis.com/books/v1/volumes)
 
 ### Planned Features
 * **Search:** A search bar to find books by title or author name.
