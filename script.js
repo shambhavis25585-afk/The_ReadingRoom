@@ -1,57 +1,44 @@
-const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
-const bookResults = document.getElementById('bookResults');
-const loading = document.getElementById('loading');
+const searchInput = document.getElementById('searchInput');
+const bookContainer = document.getElementById('bookContainer');
 
-async function fetchBooks() {
+async function findBooks() {
     const query = searchInput.value;
-    if (!query) return alert("Please enter a book name!");
-
-    // Show loading message and clear old results
-    loading.classList.remove('hidden');
-    bookResults.innerHTML = '';
-
-    try {
-        // Fetching from Google Books API
-        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`);
-        const data = await response.json();
-
-        if (!data.items) {
-            bookResults.innerHTML = "<p>No books found. Try another search!</p>";
-            return;
-        }
-
-        displayBooks(data.items);
-    } catch (error) {
-        console.error("Error fetching data:", error);
-        bookResults.innerHTML = "<p>Sorry, the library is closed right now. Try again later!</p>";
-    } finally {
-        loading.classList.add('hidden');
+    if (!query) {
+        alert("Please type a book name!");
+        return;
     }
+
+    const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
+    const data = await response.json();
+    
+    displayResults(data.items);
 }
 
-function displayBooks(books) {
-    bookResults.innerHTML = books.map(book => {
-        const info = book.volumeInfo;
-        const thumbnail = info.imageLinks ? info.imageLinks.thumbnail : 'https://via.placeholder.com/150x200?text=No+Cover';
-        const authors = info.authors ? info.authors.join(', ') : 'Unknown Author';
-        const year = info.publishedDate ? info.publishedDate.split('-')[0] : 'N/A';
 
-        return `
+function displayResults(books) {
+    bookContainer.innerHTML = "";
+
+    if (!books) {
+        bookContainer.innerHTML = "<p>No books found. Try again!</p>";
+        return;
+    }
+
+    books.forEach(book => {
+        const info = book.volumeInfo;
+        const img = info.imageLinks ? info.imageLinks.thumbnail : 'https://via.placeholder.com/128x192?text=No+Cover';
+        
+       
+        const bookCard = `
             <div class="book-card">
-                <img src="${thumbnail}" alt="Book Cover">
+                <img src="${img}" alt="Book Cover">
                 <h3>${info.title}</h3>
-                <p><strong>Author:</strong> ${authors}</p>
-                <p><strong>Year:</strong> ${year}</p>
+                <p>${info.authors ? info.authors.join(', ') : 'Unknown Author'}</p>
             </div>
         `;
-    }).join('');
+        bookContainer.innerHTML += bookCard;
+    });
 }
 
-// Search when button is clicked
-searchBtn.addEventListener('click', fetchBooks);
 
-// Search when 'Enter' key is pressed
-searchInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') fetchBooks();
-});
+searchBtn.addEventListener('click', findBooks);
