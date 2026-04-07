@@ -1,44 +1,57 @@
-const searchBtn = document.getElementById('searchBtn');
 const searchInput = document.getElementById('searchInput');
-const bookContainer = document.getElementById('bookContainer');
+const searchBtn = document.getElementById('searchBtn');
+const bookResults = document.getElementById('bookResults');
+const loading = document.getElementById('loading');
 
-async function findBooks() {
+async function fetchBooks() {
     const query = searchInput.value;
-    if (!query) {
-        alert("Please type a book name!");
-        return;
-    }
+    if (!query) return alert("Please enter a book name!");
 
-    const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
-    const data = await response.json();
-    
-    displayResults(data.items);
+    // Show loading message and clear old results
+    loading.classList.remove('hidden');
+    bookResults.innerHTML = '';
+
+    try {
+        // Fetching from Google Books API
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`);
+        const data = await response.json();
+
+        if (!data.items) {
+            bookResults.innerHTML = "<p>No books found. Try another search!</p>";
+            return;
+        }
+
+        displayBooks(data.items);
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        bookResults.innerHTML = "<p>Sorry, the library is closed right now. Try again later!</p>";
+    } finally {
+        loading.classList.add('hidden');
+    }
 }
 
-
-function displayResults(books) {
-    bookContainer.innerHTML = "";
-
-    if (!books) {
-        bookContainer.innerHTML = "<p>No books found. Try again!</p>";
-        return;
-    }
-
-    books.forEach(book => {
+function displayBooks(books) {
+    bookResults.innerHTML = books.map(book => {
         const info = book.volumeInfo;
-        const img = info.imageLinks ? info.imageLinks.thumbnail : 'https://via.placeholder.com/128x192?text=No+Cover';
-        
-       
-        const bookCard = `
+        const thumbnail = info.imageLinks ? info.imageLinks.thumbnail : 'https://via.placeholder.com/150x200?text=No+Cover';
+        const authors = info.authors ? info.authors.join(', ') : 'Unknown Author';
+        const year = info.publishedDate ? info.publishedDate.split('-')[0] : 'N/A';
+
+        return `
             <div class="book-card">
-                <img src="${img}" alt="Book Cover">
+                <img src="${thumbnail}" alt="Book Cover">
                 <h3>${info.title}</h3>
-                <p>${info.authors ? info.authors.join(', ') : 'Unknown Author'}</p>
+                <p><strong>Author:</strong> ${authors}</p>
+                <p><strong>Year:</strong> ${year}</p>
             </div>
         `;
-        bookContainer.innerHTML += bookCard;
-    });
+    }).join('');
 }
 
+// Search when button is clicked
+searchBtn.addEventListener('click', fetchBooks);
 
-searchBtn.addEventListener('click', findBooks);
+// Search when 'Enter' key is pressed
+searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') fetchBooks();
+});
