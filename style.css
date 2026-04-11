@@ -3,27 +3,21 @@ body {
     margin: 0;
     min-height: 100vh;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-
     background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
                 url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=2000');
     background-size: cover;
     background-position: center;
     background-attachment: fixed; 
     color: #333;
-}
-
-.dark-mode {
-    background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
-                url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=2000') !important;
-    background-size: cover;
-    background-attachment: fixed;
-    color: white;
+    transition: background 0.3s ease; 
 }
 
 header {
     margin-bottom: 30px;
     text-align: center;
+    padding: 20px;
+    background: white;
+    color: black;
 }
 
 .search-container {
@@ -40,9 +34,9 @@ input {
     font-size: 16px;
 }
 
-button {
+button#searchBtn {
     padding: 12px 24px;
-    background: #007bff;
+    background: #8c1f55;
     color: white;
     border: none;
     border-radius: 8px;
@@ -50,8 +44,18 @@ button {
     font-weight: bold;
 }
 
-button:hover {
-    background: #0056b3;
+button#searchBtn:hover {
+    background: #681a4e;
+}
+
+button#themeToggle {
+    padding: 12px 24px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .book-grid {
@@ -98,35 +102,6 @@ button:hover {
     margin: 5px 0;
 }
 
-.hidden {
-    display: none;
-}
-
-#loading {
-    font-size: 18px;
-    font-weight: bold;
-    color: #007bff;
-}
-
-
-body {
-    background-color: white;
-    color: black;
-    transition: background 0.3s ease; 
-}
-
-
-.dark-mode {
-    background-color: #1a1a1a;
-    color: white;
-}
-
-.dark-mode .book-card {
-    background-color: #333;
-    border: 1px solid #444;
-}
-
-
 .view-btn {
     display: inline-block;
     margin-top: 10px;
@@ -140,4 +115,46 @@ body {
 
 .view-btn:hover {
     background-color: #771824;
+}
+
+.dark-mode {
+    background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+                url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=2000') !important;
+    background-size: cover;
+    background-attachment: fixed;
+    color: white;
+}
+
+.dark-mode header {
+    background: black;
+    color: white;
+}
+
+.dark-mode button#themeToggle {
+    background: white;
+    color: black;
+}
+
+.dark-mode .book-card {
+    background-color: #333;
+    border: 1px solid #444;
+}
+
+.dark-mode .book-card h3 {
+    color: white;
+}
+
+.dark-mode .book-card p {
+    color: #ccc;
+}
+
+.hidden {
+    display: none;
+}
+
+#loading {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4e1933;
+    text-align: center;
 }
