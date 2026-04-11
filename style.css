@@ -131,7 +131,7 @@ body {
     display: inline-block;
     margin-top: 10px;
     padding: 8px 15px;
-    background-color: #764ba2;
+    background-color: #940f0f;
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -139,5 +139,5 @@ body {
 }
 
 .view-btn:hover {
-    background-color: #667eea;
+    background-color: #771824;
 }
