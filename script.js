@@ -56,3 +56,4 @@ searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') fetchBooks();
 });
 
+searchBtn.addEventListener('click', fetchBooks);
