@@ -49,11 +49,14 @@ function displayBooks(books) {
 }
 
 
-searchBtn.addEventListener('click', fetchBooks);
+
+searchBtn.addEventListener('click', () => {
+    fetchBooks();
+});
 
 
 searchInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') fetchBooks();
+    if (e.key === 'Enter') {
+        fetchBooks();
+    }
 });
-
-searchBtn.addEventListener('click', fetchBooks);
