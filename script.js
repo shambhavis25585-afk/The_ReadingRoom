@@ -49,3 +49,8 @@ searchBtn.addEventListener('click', fetchBooks);
 searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') fetchBooks();
 });
+
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    themeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
+});
