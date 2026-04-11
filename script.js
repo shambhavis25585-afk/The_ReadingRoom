@@ -3,26 +3,27 @@ const searchInput = document.getElementById('searchInput');
 const bookResults = document.getElementById('bookResults');
 
 async function fetchBooks() {
-    const query = searchInput.value.trim();
+    const query = searchInput.value;
+
     if (!query) {
-        alert("Please enter a book title or author.");
+        alert("Please enter a book name!");
         return;
     }
 
-    bookResults.innerHTML = '<p id="loading">Searching the library...</p>';
+    bookResults.innerHTML = "<p>Searching...</p>";
 
     try {
-        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
+        const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`;
+        const response = await fetch(url);
         const data = await response.json();
 
-        if (data.items && data.items.length > 0) {
+        if (data.items) {
             displayBooks(data.items);
         } else {
-            bookResults.innerHTML = '<p style="color: white; grid-column: 1/-1; text-align: center;">No books found. Try a different search!</p>';
+            bookResults.innerHTML = "<p>No books found. Try again!</p>";
         }
     } catch (error) {
-        console.error("Error fetching data:", error);
-        bookResults.innerHTML = '<p style="color: red; grid-column: 1/-1; text-align: center;">Connection error. Please try again.</p>';
+        bookResults.innerHTML = "<p>Something went wrong.</p>";
     }
 }
 
