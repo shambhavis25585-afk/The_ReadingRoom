@@ -7,12 +7,12 @@ async function fetchBooks() {
     const query = searchInput.value;
     if (!query) return alert("Please enter a book name!");
 
-    // Show loading message and clear old results
+    
     loading.classList.remove('hidden');
     bookResults.innerHTML = '';
 
     try {
-        // Fetching from Google Books API
+        
         const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`);
         const data = await response.json();
 
@@ -48,10 +48,10 @@ function displayBooks(books) {
     }).join('');
 }
 
-// Search when button is clicked
+
 searchBtn.addEventListener('click', fetchBooks);
 
-// Search when 'Enter' key is pressed
+
 searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') fetchBooks();
 });
