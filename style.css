@@ -125,3 +125,19 @@ body {
     background-color: #333;
     border: 1px solid #444;
 }
+
+
+.view-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #764ba2;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.view-btn:hover {
+    background-color: #667eea;
+}

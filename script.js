@@ -36,10 +36,13 @@ function displayBooks(books) {
         
         const card = document.createElement('div');
         card.className = 'book-card';
+       
+
         card.innerHTML = `
-            <img src="${img}" alt="cover">
-            <h3>${info.title}</h3>
-            <p>${info.authors ? info.authors[0] : 'Unknown Author'}</p>
+        <img src="${img}" alt="cover">
+        <h3>${info.title}</h3>
+        <p>${info.authors ? info.authors[0] : 'Unknown Author'}</p>
+        <a href="${info.infoLink}" target="_blank" class="view-btn">View Details</a>
         `;
         bookResults.appendChild(card);
     });
